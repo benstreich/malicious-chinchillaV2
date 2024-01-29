@@ -1,0 +1,58 @@
+**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20240129112818
+Benutzername: DOM\BES
+RunAs-Benutzer: DOM\BES
+Konfigurationsname: 
+Computer: SY-I-NB-004 (Microsoft Windows NT 10.0.19045.0)
+Hostanwendung: C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe C:\Users\BES\Documents\powershell\mc\malicious-chinchillaV2.ps1
+Prozess-ID: 16684
+PSVersion: 5.1.19041.3930
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.3930
+BuildVersion: 10.0.19041.3930
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Die Aufzeichnung wurde gestartet. Die Ausgabedatei ist "dfg\!_Comb+theo+lian&10&SpecCharTrue.txt".
+Only Upper/Lowercase: keyword(lian), Possibilities(16)
+Upper/Lowercase + numbers at every index: keyword(lian), Possibilities(800)
+Upper/Lowercase + specialcharacters at every index: keyword(lian), Possibilities(1520)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(lian), Possibilities(1459200)
+Only Upper/Lowercase: keyword(liantheo), Possibilities(256)
+Upper/Lowercase + numbers at every index: keyword(liantheo), Possibilities(23040)
+Upper/Lowercase + specialcharacters at every index: keyword(liantheo), Possibilities(43776)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(liantheo), Possibilities(1120665600)
+Only Upper/Lowercase: keyword(theo), Possibilities(16)
+Upper/Lowercase + numbers at every index: keyword(theo), Possibilities(800)
+Upper/Lowercase + specialcharacters at every index: keyword(theo), Possibilities(1520)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(theo), Possibilities(1459200)
+Only Upper/Lowercase: keyword(theolian), Possibilities(256)
+Upper/Lowercase + numbers at every index: keyword(theolian), Possibilities(23040)
+Upper/Lowercase + specialcharacters at every index: keyword(theolian), Possibilities(43776)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(theolian), Possibilities(1120665600)
+Only Upper/Lowercase: keyword(nail), Possibilities(16)
+Upper/Lowercase + numbers at every index: keyword(nail), Possibilities(800)
+Upper/Lowercase + specialcharacters at every index: keyword(nail), Possibilities(1520)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(nail), Possibilities(1459200)
+Only Upper/Lowercase: keyword(oehtnail), Possibilities(256)
+Upper/Lowercase + numbers at every index: keyword(oehtnail), Possibilities(23040)
+Upper/Lowercase + specialcharacters at every index: keyword(oehtnail), Possibilities(43776)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(oehtnail), Possibilities(1120665600)
+Only Upper/Lowercase: keyword(oeht), Possibilities(16)
+Upper/Lowercase + numbers at every index: keyword(oeht), Possibilities(800)
+Upper/Lowercase + specialcharacters at every index: keyword(oeht), Possibilities(1520)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(oeht), Possibilities(1459200)
+Only Upper/Lowercase: keyword(nailoeht), Possibilities(256)
+Upper/Lowercase + numbers at every index: keyword(nailoeht), Possibilities(23040)
+Upper/Lowercase + specialcharacters at every index: keyword(nailoeht), Possibilities(43776)
+Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword(nailoeht), Possibilities(1120665600)
+Total possible Combinations: 4488776832
+PS>TerminatingError(): "Die Pipeline wurde beendet."
+>> TerminatingError(): "Die Pipeline wurde beendet."
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20240129112832
+**********************

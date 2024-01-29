@@ -1,0 +1,108 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20240129103248
+Benutzername: DOM\BES
+RunAs-Benutzer: DOM\BES
+Konfigurationsname: 
+Computer: SY-I-NB-004 (Microsoft Windows NT 10.0.19045.0)
+Hostanwendung: C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe C:\Users\BES\Documents\powershell\mc\malicious-chinchillaV2.ps1
+Prozess-ID: 16684
+PSVersion: 5.1.19041.3930
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.3930
+BuildVersion: 10.0.19041.3930
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Die Aufzeichnung wurde gestartet. Die Ausgabedatei ist "dfg\!_Comb+ahh+lian&10&SpecCharFalse.txt".
+1 ahh 8
+2 ahh 72
+3 ahh 144
+1 ahhlian 128
+2 ahhlian 1152
+3 ahhlian 2304
+1 lian 16
+2 lian 144
+3 lian 288
+1 lianahh 128
+2 lianahh 1152
+3 lianahh 2304
+1 hha 8
+2 hha 72
+3 hha 144
+1 nailhha 128
+2 nailhha 1152
+3 nailhha 2304
+1 nail 16
+2 nail 144
+3 nail 288
+1 hhanail 128
+2 hhanail 1152
+3 hhanail 2304
+3 15680
+PS>TerminatingError(): "Die Pipeline wurde beendet."
+>> TerminatingError(): "Die Pipeline wurde beendet."
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20240129103316
+**********************
+**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20240129105442
+Benutzername: DOM\BES
+RunAs-Benutzer: DOM\BES
+Konfigurationsname: 
+Computer: SY-I-NB-004 (Microsoft Windows NT 10.0.19045.0)
+Hostanwendung: C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe C:\Users\BES\Documents\powershell\mc\malicious-chinchillaV2.ps1
+Prozess-ID: 16684
+PSVersion: 5.1.19041.3930
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.3930
+BuildVersion: 10.0.19041.3930
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Die Aufzeichnung wurde gestartet. Die Ausgabedatei ist "dfg\!_Comb+ahh+lian&10&SpecCharFalse.txt".
+1 ahh 8
+2 ahh 320
+3 ahh 608
+4 ahh 194560
+1 ahhlian 128
+2 ahhlian 10240
+3 ahhlian 19456
+4 ahhlian 199229440
+1 lian 16
+2 lian 800
+3 lian 1520
+4 lian 1216000
+1 lianahh 128
+2 lianahh 10240
+3 lianahh 19456
+4 lianahh 199229440
+1 hha 8
+2 hha 320
+3 hha 608
+4 hha 194560
+1 nailhha 128
+2 nailhha 10240
+3 nailhha 19456
+4 nailhha 199229440
+1 nail 16
+2 nail 800
+3 nail 1520
+4 nail 1216000
+1 hhanail 128
+2 hhanail 10240
+3 hhanail 19456
+4 hhanail 199229440
+10 900063120
+PS>TerminatingError(): "Die Pipeline wurde beendet."
+>> TerminatingError(): "Die Pipeline wurde beendet."
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20240129105519
+**********************

@@ -1,0 +1,146 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20240129111247
+Benutzername: DOM\BES
+RunAs-Benutzer: DOM\BES
+Konfigurationsname: 
+Computer: SY-I-NB-004 (Microsoft Windows NT 10.0.19045.0)
+Hostanwendung: C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe C:\Users\BES\Documents\powershell\mc\malicious-chinchillaV2.ps1
+Prozess-ID: 16684
+PSVersion: 5.1.19041.3930
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.3930
+BuildVersion: 10.0.19041.3930
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Die Aufzeichnung wurde gestartet. Die Ausgabedatei ist "sd\!_Comb+cheetah+zoo+ben&10&SpecCharTrue.txt".
+1 ben 8
+2 ben 320
+3 ben 608
+4 ben 243200
+1 bencheetah 1024
+2 bencheetah 112640
+3 bencheetah 214016
+4 bencheetah 26298286080
+1 bencheetahzoo 8192
+2 bencheetahzoo 1146880
+3 bencheetahzoo 2179072
+4 bencheetahzoo 2677643673600
+1 benzoo 64
+2 benzoo 4480
+3 benzoo 8512
+4 benzoo 43581440
+1 benzoocheetah 8192
+2 benzoocheetah 1146880
+3 benzoocheetah 2179072
+4 benzoocheetah 2677643673600
+1 cheetah 128
+2 cheetah 10240
+3 cheetah 19456
+4 cheetah 224133120
+1 cheetahben 1024
+2 cheetahben 112640
+3 cheetahben 214016
+4 cheetahben 26298286080
+1 cheetahbenzoo 8192
+2 cheetahbenzoo 1146880
+3 cheetahbenzoo 2179072
+4 cheetahbenzoo 2677643673600
+1 cheetahzoo 1024
+2 cheetahzoo 112640
+3 cheetahzoo 214016
+4 cheetahzoo 26298286080
+1 cheetahzooben 8192
+2 cheetahzooben 1146880
+3 cheetahzooben 2179072
+4 cheetahzooben 2677643673600
+1 zoo 8
+2 zoo 320
+3 zoo 608
+4 zoo 243200
+1 zooben 64
+2 zooben 4480
+3 zooben 8512
+4 zooben 43581440
+1 zoobencheetah 8192
+2 zoobencheetah 1146880
+3 zoobencheetah 2179072
+4 zoobencheetah 2677643673600
+1 zoocheetah 1024
+2 zoocheetah 112640
+3 zoocheetah 214016
+4 zoocheetah 26298286080
+1 zoocheetahben 8192
+2 zoocheetahben 1146880
+3 zoocheetahben 2179072
+4 zoocheetahben 2677643673600
+1 neb 8
+2 neb 320
+3 neb 608
+4 neb 243200
+1 hateehcneb 1024
+2 hateehcneb 112640
+3 hateehcneb 214016
+4 hateehcneb 26298286080
+1 oozhateehcneb 8192
+2 oozhateehcneb 1146880
+3 oozhateehcneb 2179072
+4 oozhateehcneb 2677643673600
+1 oozneb 64
+2 oozneb 4480
+3 oozneb 8512
+4 oozneb 43581440
+1 hateehcoozneb 8192
+2 hateehcoozneb 1146880
+3 hateehcoozneb 2179072
+4 hateehcoozneb 2677643673600
+1 hateehc 128
+2 hateehc 10240
+3 hateehc 19456
+4 hateehc 224133120
+1 nebhateehc 1024
+2 nebhateehc 112640
+3 nebhateehc 214016
+4 nebhateehc 26298286080
+1 ooznebhateehc 8192
+2 ooznebhateehc 1146880
+3 ooznebhateehc 2179072
+4 ooznebhateehc 2677643673600
+1 oozhateehc 1024
+2 oozhateehc 112640
+3 oozhateehc 214016
+4 oozhateehc 26298286080
+1 neboozhateehc 8192
+2 neboozhateehc 1146880
+3 neboozhateehc 2179072
+4 neboozhateehc 2677643673600
+1 ooz 8
+2 ooz 320
+3 ooz 608
+4 ooz 243200
+1 nebooz 64
+2 nebooz 4480
+3 nebooz 8512
+4 nebooz 43581440
+1 hateehcnebooz 8192
+2 hateehcnebooz 1146880
+3 hateehcnebooz 2179072
+4 hateehcnebooz 2677643673600
+1 hateehcooz 1024
+2 hateehcooz 112640
+3 hateehcooz 214016
+4 hateehcooz 26298286080
+1 nebhateehcooz 8192
+2 nebhateehcooz 1146880
+3 nebhateehcooz 2179072
+4 nebhateehcooz 2677643673600
+10 32342776683424
+PS>TerminatingError(): "Die Pipeline wurde beendet."
+>> TerminatingError(): "Die Pipeline wurde beendet."
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20240129111256
+**********************
