@@ -8,7 +8,7 @@
     Syntax
     --------------------
     keyword,keyword,...; ([-sc] for specialcharacters) ([-n{int}] for number)
-    e.g. zoo,cheetah; -n10 -sc
+    e.g. zoo,cheetah; -n10 -sc -pcC:\Users\Example
 
     Logic
     --------------------
@@ -40,12 +40,19 @@
 
 
 function mc:pw/U{
-param ($array, [int]$range, [bool]$specChar)
+param ($array, [int]$range, [bool]$specChar, [string]$path)
         
-        
-        New-Item -Path "C:\Users\BES\Documents\powershell\mc\mc_pwKeywords" -ItemType "file" -Name "!_Comb+${array}&${range}&SpecChar${specChar}.txt"
+        foreach($a in $array)
+        {
+            $name += "+" + $a
+        }
 
-        Start-Transcript -Path "C:\Users\BES\Documents\powershell\mc\mc_pwKeywords\!_Comb+${array}&${range}&SpecChar${specChar}.txt" -Append 
+        $fileName = "!_Comb${name}&${range}&SpecChar${specChar}.txt"
+        $completePath = "${path}\${fileName}"
+
+        New-Item -Path $path -ItemType "file" -Name $fileName
+
+        Start-Transcript -Path $completePath -Append 
 
     try {
 
@@ -262,15 +269,14 @@ param ($array, [int]$range, [bool]$specChar)
 
 
 
-    $filePath = "C:\Users\BES\Documents\powershell\mc\mc_pwKeywords\!_Comb+${array}&${range}&SpecChar${specChar}.txt"
 
-    $content = Get-Content $filePath | Select-Object -Skip 19
+    $content = Get-Content $completePath | Select-Object -Skip 19
 
     $lineCount = $content.Count - 4
 
     $content = $content | Select-Object -First $lineCount
 
-    $content | Set-Content "C:\Users\BES\Documents\powershell\mc\mc_pwKeywords\!_Comb+${array}&${range}&SpecChar${specChar}.txt"
+    $content | Set-Content $completePath
 
 }
 
@@ -287,6 +293,18 @@ if($cmd -like "*;*")
         $specialcharacters = $true
     }
 
+    if($cmd -match "-p(\S+)")
+    {
+        $path = [string]$Matches[1]
+       
+    }
+
+    elseif($cmd -notmatch "-p(\S+)")
+    {
+        "Please provide a path using -p{path}"
+        break
+    }
+
     if($cmd -match '-n(\d+)')
     {
         $number = [int]$Matches[1]
@@ -294,22 +312,24 @@ if($cmd -like "*;*")
 
     $parts = $cmd -split ';'
 
+
     $keywordsPart = $parts[0].Trim()
     
     if($keywordsPart -like "*,*")
     {
         $keywords = $keywordsPart -split ',' | ForEach-Object { $_.Trim() }
     }
+
     else
     {
         $keywords = [array]$keywordsPart
     }
 
 
-    mc:pw/U $keywords $number $specialcharacters
+    mc:pw/U $keywords $number $specialcharacters $path
 
 }
 else
 {
-    Write-Host "The input format is incorrect. Please ensure it follows the 'keyword,keyword; -sc -n{number}' format."
+    Write-Host "The input format is incorrect. Please ensure it follows the 'keyword,keyword; -sc -n{number} -p{path}' format."
 }
