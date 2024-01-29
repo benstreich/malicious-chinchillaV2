@@ -74,6 +74,60 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
             }
            
 
+           foreach($keyword in $keywords)
+           {
+                [int]$len = $keyword.Length
+
+                #only upper/lower comb
+                $combinationsCalc += [Math]::Pow(2, $len)
+
+                #upper/lower + numbers at every index
+                if($numbers -ne 0)
+                {
+                    $combinationsCalc += (([Math]::Pow(2, $len)) * ($len+1)) * $numbers
+                }
+
+                #upper/lower + special characters at every index
+                if($specChar -eq $true)
+                {
+                    $combinationsCalc += ([Math]::Pow(2, $len) * ($len + 1)) * 19
+                }
+
+                #upper/lower + special characters at every index + numbers at every index
+                if($specChar -eq $true -and $numbers -ne 0)
+                {
+                    $combinationsCalc += ((([Math]::Pow(2, $len)) * ($len+1)) * $numbers) * (([Math]::Pow(2, $len) * ($len + 2)) * 19)
+                }
+
+                $b = [Math]::Pow(2, $len)
+                $a = (([Math]::Pow(2, $len)) * ($len + 1)) * $numbers
+                $c = ([Math]::Pow(2, $len) * ($len + 1)) * 19
+                $d = ((([Math]::Pow(2, $len)) * ($len+1)) * $numbers) * (([Math]::Pow(2, $len) * ($len + 2)) * 19)
+
+
+                Write-host "Only Upper/Lowercase: keyword($keyword), Possibilities($b)"
+
+                if($numbers -ne 0)
+                {
+                    Write-host "Upper/Lowercase + numbers at every index: keyword($keyword), Possibilities($a)"
+                }
+                if($specChar -eq $true)
+                {
+                    Write-host "Upper/Lowercase + specialcharacters at every index: keyword($keyword), Possibilities($c)"
+                }
+
+                if($specChar -eq $true -and $numbers -ne 0)
+                {
+                    Write-host "Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword($keyword), Possibilities($d)"
+                }
+                Write-host "`n"
+
+           }
+
+           Write-host "Total possible Combinations:" $combinationsCalc
+
+           Start-Sleep -Seconds 6
+
 
                 #every lower/upper case combination 
                 #foreach combination of keywords
@@ -190,7 +244,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
 
                                 foreach($sp in $specialcharacteres)
                                 {
-                                    for($u = 0; $u -le $currentCombination.Length; $u++)
+                                    for($u = 0; $u -le $currentCombination.Length + 1; $u++)
                                     {
                                         $curCom.Insert($u, $sp.ToString())
                                     }
