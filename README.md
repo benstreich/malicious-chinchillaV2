@@ -14,7 +14,7 @@ malicious-chinchillaV2
     Syntax
     --------------------
     keyword,keyword,...; ([-sc] for specialcharacters) ([-n{int}] for number)
-    e.g. zoo,cheetah; -n10 -sc -pcC:\Users\Example
+    e.g. zoo,cheetah; -n10 -sc -pcC:\Users\Example -rv
 
     Logic
     --------------------
