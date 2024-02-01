@@ -16,7 +16,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
     try {
 
         
-        function mc:pw{
+       function mc:pw{
             param(
                 [System.Collections.ArrayList]$keywords,   
                 [int]$numbers
@@ -79,47 +79,36 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                 [int]$len = $keyword.Length
 
                 #only upper/lower comb
-                $combinationsCalc += [Math]::Pow(2, $len)
+                $ulCase = [Math]::Pow(2, $len)
+                $combinationsCalc += $ulCase
+
+                Write-host "Only Upper/Lowercase: keyword($keyword), Possibilities($ulCase)"
+                
 
                 #upper/lower + numbers at every index
                 if($numbers -ne 0)
                 {
-                    $combinationsCalc += (([Math]::Pow(2, $len)) * ($len+1)) * $numbers
+                    $ulCaseN = (([Math]::Pow(2, $len)) * ($len + 1)) * ($numbers + 1)
+                    $combinationsCalc += $ulCaseN
+                    Write-host "Upper/Lowercase + numbers at every index: keyword($keyword), Possibilities($ulCaseN)"
                 }
 
                 #upper/lower + special characters at every index
                 if($specChar -eq $true)
                 {
-                    $combinationsCalc += ([Math]::Pow(2, $len) * ($len + 1)) * 19
+                    $ulCaseSC = ([Math]::Pow(2, $len) * ($len + 1)) * 19
+                    $combinationsCalc += $ulCaseSC
+                    Write-host "Upper/Lowercase + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseSC)"
                 }
 
                 #upper/lower + special characters at every index + numbers at every index
                 if($specChar -eq $true -and $numbers -ne 0)
                 {
-                    $combinationsCalc += ((([Math]::Pow(2, $len)) * ($len+1)) * $numbers) * (([Math]::Pow(2, $len) * ($len + 2)) * 19)
+                    $ulCaseNSC = (((($len+2) * 19) * ($len+1)) * ($numbers+1)) * ([Math]::Pow(2, $len))
+                    $combinationsCalc += $ulCaseNSC
+                    Write-host "Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseNSC)"
                 }
 
-                $b = [Math]::Pow(2, $len)
-                $a = (([Math]::Pow(2, $len)) * ($len + 1)) * $numbers
-                $c = ([Math]::Pow(2, $len) * ($len + 1)) * 19
-                $d = ((([Math]::Pow(2, $len)) * ($len+1)) * $numbers) * (([Math]::Pow(2, $len) * ($len + 2)) * 19)
-
-
-                Write-host "Only Upper/Lowercase: keyword($keyword), Possibilities($b)"
-
-                if($numbers -ne 0)
-                {
-                    Write-host "Upper/Lowercase + numbers at every index: keyword($keyword), Possibilities($a)"
-                }
-                if($specChar -eq $true)
-                {
-                    Write-host "Upper/Lowercase + specialcharacters at every index: keyword($keyword), Possibilities($c)"
-                }
-
-                if($specChar -eq $true -and $numbers -ne 0)
-                {
-                    Write-host "Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword($keyword), Possibilities($d)"
-                }
                 Write-host "`n"
 
            }
@@ -134,7 +123,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                 foreach($keyword in $keywords)
                 {
                  
-                function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
+                    function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
                         if ($currentIndex -eq $inputString.Length) {
                                $currentCombination
                             
@@ -147,10 +136,10 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                             GenerateCombinations $inputString ($currentIndex + 1) ($currentCombination + $lowerChar)
                             GenerateCombinations $inputString ($currentIndex + 1) ($currentCombination + $upperChar)
                         }
-                
-                GenerateCombinations $keyword
+                    
+                    GenerateCombinations $keyword
 
-              }
+                }
 
                 #every lower/upper case combination 
                 #foreach combination of keywords
