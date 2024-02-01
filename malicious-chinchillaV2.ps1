@@ -11,7 +11,6 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
 
         New-Item -Path $path -ItemType "file" -Name $fileName
 
-        Start-Transcript -Path $completePath -Append 
 
     try {
 
@@ -114,8 +113,9 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
            }
 
            Write-host "Total possible Combinations:" $combinationsCalc
+           $estTime = ($combinationsCalc / 22) / 1000
+           Write-host "Estimated Time: ${estTime}s"
 
-           Start-Sleep -Seconds 6
 
 
                 #every lower/upper case combination 
@@ -125,7 +125,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                  
                     function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
                         if ($currentIndex -eq $inputString.Length) {
-                               $currentCombination
+                               $currentCombination 
                             
                             return
                         }
@@ -156,7 +156,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                             for ($k = 0; $k -le $numbers; $k++) {
 
                                 for ($z = 0; $z -le $currentCombination.Length; $z++) {
-                                    $currentCombination.Insert($z, $k.ToString())
+                                    $currentCombination.Insert($z, $k.ToString()) 
                                     
                                 }
                             }
@@ -193,7 +193,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                             {
                                 for($z = 0; $z -le $currentCombination.Length; $z++)
                                 {
-                                    $currentCombination.Insert($z, $sp.ToString())
+                                    $currentCombination.Insert($z, $sp.ToString()) 
                                 }
                                 
                             }
@@ -235,7 +235,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                                 {
                                     for($u = 0; $u -le $currentCombination.Length + 1; $u++)
                                     {
-                                        $curCom.Insert($u, $sp.ToString())
+                                        $curCom.Insert($u, $sp.ToString()) 
                                     }
                                 
                                 }
@@ -257,28 +257,14 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                     }
 
                 }
-            
       }
     
 
-        mc:pw $array $range $specChar
+        (mc:pw $array $range $specChar) | Out-File -FilePath $completePath
         
     } catch {
         Write-Error "An error occurred: $_"
-    } finally {
-        Stop-Transcript
-    }
-
-
-
-
-    $content = Get-Content $completePath | Select-Object -Skip 19
-
-    $lineCount = $content.Count - 4
-
-    $content = $content | Select-Object -First $lineCount
-
-    $content | Set-Content $completePath
+    } 
 
 }
 
