@@ -1,12 +1,12 @@
 ﻿function mc:pw/U{
-param ($array, [int]$range, [bool]$specChar, [string]$path)
+param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
         
         foreach($a in $array)
         {
             $name += "+" + $a
         }
 
-        $fileName = "!_Comb${name}&${range}&SpecChar${specChar}.txt"
+        $fileName = "!_Comb${name}&${range}&SpecChar${specChar}&Reversed${reverse}.txt"
         $completePath = "${path}\${fileName}"
 
         New-Item -Path $path -ItemType "file" -Name $fileName
@@ -19,7 +19,8 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
             param(
                 [System.Collections.ArrayList]$keywords,   
                 [int]$numbers
-                ,[bool]$specialCharacters
+                ,[bool]$specialCharacters,
+                [bool]$reversed
             )
 
             if($keywords.Count -gt 1)
@@ -51,6 +52,9 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
 
                  $tempallComb = $allCombinations
 
+                 if($reversed -eq $true)
+                 {
+
                  foreach($allCombination in $tempallComb)
                  {
                      $array = @()
@@ -62,6 +66,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
                      $allCombinations += (($array -join('')))
                      
                  }
+                 }
 
                  $keywords = $allCombinations
             }
@@ -69,7 +74,8 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
 
             else
             {
-               $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''
+                if($reversed -eq $true){
+               $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''}
             }
            
 
@@ -260,7 +266,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path)
       }
     
 
-        (mc:pw $array $range $specChar) | Out-File -FilePath $completePath
+        (mc:pw $array $range $specChar $reverse) | Out-File -FilePath $completePath
         
     } catch {
         Write-Error "An error occurred: $_"
@@ -275,10 +281,16 @@ if($cmd -like "*;*")
 {
     $specialcharacters = $false
     $number = 0
-    
+    $reverse = $false
+
+
     if($cmd -like "*-sc*")
     {
         $specialcharacters = $true
+    }
+    if($cmd -like "*-rv*")
+    {
+        $reverse = $true          
     }
 
     if($cmd -match "-p(\S+)")
@@ -314,7 +326,7 @@ if($cmd -like "*;*")
     }
 
 
-    mc:pw/U $keywords $number $specialcharacters $path
+    mc:pw/U $keywords $number $specialcharacters $path $reverse
 
 }
 else
