@@ -1,12 +1,12 @@
 ﻿function mc:pw/U{
-param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
+param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse)
         
         foreach($a in $array)
         {
             $name += "+" + $a
         }
 
-        $fileName = "!_Comb${name}&${range}&SpecChar${specChar}&Reversed${reverse}.txt"
+        $fileName = "!_Comb${name}&Range${range}&SpecChar${specChar}&Reversed${reverse}.txt"
         $completePath = "${path}\${fileName}"
 
         New-Item -Path $path -ItemType "file" -Name $fileName
@@ -19,10 +19,12 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
             param(
                 [System.Collections.ArrayList]$keywords,   
                 [int]$numbers
-                ,[bool]$specialCharacters,
+                ,[int]$specialCharacters,
                 [bool]$reversed
             )
 
+
+            #foundationstone Keywords
             if($keywords.Count -gt 1)
             {
 
@@ -71,14 +73,15 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
                  $keywords = $allCombinations
             }
 
-
             else
             {
                 if($reversed -eq $true){
-               $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''}
+                $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''}
             }
            
 
+
+           #CombinationsCalculations
            foreach($keyword in $keywords)
            {
                 [int]$len = $keyword.Length
@@ -99,19 +102,38 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
                 }
 
                 #upper/lower + special characters at every index
-                if($specChar -eq $true)
+                if($specialCharacters -ne 0)
                 {
-                    $ulCaseSC = ([Math]::Pow(2, $len) * ($len + 1)) * 19
-                    $combinationsCalc += $ulCaseSC
-                    Write-host "Upper/Lowercase + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseSC)"
+                    if($specialCharacters -eq 1)
+                    {
+                        $ulCaseSC = ([Math]::Pow(2, $len) * ($len + 1)) * 19
+                        $combinationsCalc += $ulCaseSC
+                        Write-host "Upper/Lowercase + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseSC)"
+                    }
+                    if($specialCharacters -eq 2)
+                    {
+                        $ulCaseMSC = (((($len+2) * 19) * ($len+1)) * (19)) * ([Math]::Pow(2, $len))
+                        $combinationsCalc += $ulCaseMSC
+                        Write-host "Upper/Lowercase + 2 specialcharacters at every index: keyword($keyword), POssibilites($ulCaseMSC)"
+                    }
+                    
                 }
 
                 #upper/lower + special characters at every index + numbers at every index
-                if($specChar -eq $true -and $numbers -ne 0)
+                if($specialCharacters -ne 0 -and $numbers -ne 0)
                 {
-                    $ulCaseNSC = (((($len+2) * 19) * ($len+1)) * ($numbers+1)) * ([Math]::Pow(2, $len))
-                    $combinationsCalc += $ulCaseNSC
-                    Write-host "Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseNSC)"
+                    if($specialCharacters -eq 1)
+                    {
+                        $ulCaseNSC = (((($len+2) * 19) * ($len+1)) * ($numbers+1)) * ([Math]::Pow(2, $len))
+                        $combinationsCalc += $ulCaseNSC
+                        Write-host "Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseNSC)"
+                    }
+                    elseif($specialCharacters -eq 2)
+                    {
+                        $ulCaseNMSC = (((((($len+3) * 19) * ($len + 2)) * 19) * ($len+1)) * ($numbers + 1)) * ([Math]::Pow(2, $len))
+                        $combinationsCalc += $ulCaseNMSC
+                        Write-Host "Upper/Lowercase + numbers at every index + specialcharacters (multiple) at every index: keyword($keyword), Possibilities($ulCaseNMSC)"
+                    }
                 }
 
                 Write-host "`n"
@@ -185,7 +207,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
                 #every lower/upper case combination 
                 #foreach combination of keywords
                 #with foreach specialcharacter in each index of the string
-                if($specialCharacters -eq $true)
+                if($specialCharacters -ne 0)
                 {
                     foreach($keyword in $keywords)
                     {
@@ -199,7 +221,23 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
                             {
                                 for($z = 0; $z -le $currentCombination.Length; $z++)
                                 {
-                                    $currentCombination.Insert($z, $sp.ToString()) 
+                                    if($specialCharacters -eq 1)
+                                    {  
+                                        $currentCombination.Insert($z, $sp.ToString()) 
+                                    }
+
+                                    if($specialCharacters -eq 2){                           
+
+                                        $curComb = $currentCombination.Insert($z, $sp.ToString()) 
+
+                                        foreach($spc in $specialcharacteres)
+                                        {
+                                            for($u = 0; $u -le ($currentCombination.Length + 1); $u++)
+                                            {
+                                                $curComb.Insert($u, $spc.ToString())
+                                            }
+                                        }
+                                     }
                                 }
                                 
                             }
@@ -221,7 +259,7 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
                 #every lower/upper case combination
                 #foreach combination of keywords
                 #with foreach number at every index with every possible specialcharacter combination at every single index
-                if($specialCharacters -eq $true -and $numbers -ne 0)
+                if($specialCharacters -ne 0 -and $numbers -ne 0)
                 {
                     
                     foreach($keyword in $keywords)
@@ -232,7 +270,6 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
 
                         for($i = 0; $i -le $numbers; $i++)
                         {
-                            
                             for($z = 0; $z -le $currentCombination.Length; $z++)
                             {
                                 $curCom = $currentCombination.Insert($z, $i.ToString())
@@ -241,7 +278,23 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
                                 {
                                     for($u = 0; $u -le $currentCombination.Length + 1; $u++)
                                     {
-                                        $curCom.Insert($u, $sp.ToString()) 
+                                        if($specialCharacters -eq 1)
+                                        {
+                                            $curCom.Insert($u, $sp.ToString()) 
+                                        }
+                                        elseif($specialCharacters -eq 2)
+                                        {
+                                              $curComb = $curCom.Insert($u, $sp.ToString()) 
+
+                                               foreach($spc in $specialcharacteres)
+                                               {
+                                                   for($c = 0; $c -le ($currentCombination.Length + 2); $c++)
+                                                   {
+                                                       $curComb.Insert($c, $spc.ToString())
+                                                   }
+                                               }
+                                        }
+
                                     }
                                 
                                 }
@@ -269,7 +322,9 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
         (mc:pw $array $range $specChar $reverse) | Out-File -FilePath $completePath
         
     } catch {
-        Write-Error "An error occurred: $_"
+         Write-Host "An error occurred" -ForegroundColor "Red"
+
+         Write-Error $_
     } 
 
 }
@@ -279,15 +334,15 @@ param ($array, [int]$range, [bool]$specChar, [string]$path, [bool]$reverse)
 
 if($cmd -like "*;*")
 {
-    $specialcharacters = $false
     $number = 0
     $reverse = $false
+    $numSC = 0
 
-
-    if($cmd -like "*-sc*")
+    if($cmd -match '-sc(\d+)')
     {
-        $specialcharacters = $true
+        $numSC = [int]$Matches[1]
     }
+
     if($cmd -like "*-rv*")
     {
         $reverse = $true          
@@ -326,10 +381,10 @@ if($cmd -like "*;*")
     }
 
 
-    mc:pw/U $keywords $number $specialcharacters $path $reverse
+    mc:pw/U $keywords $number $numSC $path $reverse
 
 }
 else
 {
-    Write-Host "The input format is incorrect. Please ensure it follows the 'keyword,keyword; -sc -n{number} -p{path}' format."
+    Write-Host "The input format is incorrect. Please ensure it follows the 'keyword,keyword; -sc{number} -n{number} -p{path} -rv' format."
 }
