@@ -1,6 +1,38 @@
-﻿function mc:pw/U{
-param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse)
-        
+﻿
+
+
+
+function mc:pw/U{
+param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic)
+
+
+        if($dic -ne 0)
+        {
+            try 
+            {
+                $response = Invoke-WebRequest -Uri www.google.com -TimeoutSec 5 -ErrorAction Stop
+               
+            }
+            catch {
+                "Internet connection is not available. Please connect to the internet to use this feature"
+                break
+            }
+
+            $temparray = $array
+           
+            foreach($a in $array)
+            {
+                 $request = Invoke-RestMethod -uri "https://api.datamuse.com/words?ml=$a"
+                 $temparray += $request[0..($dic-1)].word
+            }
+            
+            $array = $temparray
+        }
+
+
+
+
+
         foreach($a in $array)
         {
             $name += "+" + $a
@@ -142,7 +174,15 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse)
 
            Write-host "Total possible Combinations:" $combinationsCalc
            $estTime = ($combinationsCalc / 22) / 1000
-           Write-host "Estimated Time: ${estTime}s"
+           if($estTime -gt 60)
+           { 
+                $estTime = $estTime / 60
+                Write-host "Estimated Time: ${estTime}m"
+           }
+            else
+           {
+                Write-host "Estimated Time: ${estTime}s"
+           }
 
 
 
@@ -330,6 +370,8 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse)
 }
 
 
+
+
 [string]$cmd = Read-Host '~!' 
 
 if($cmd -like "*;*")
@@ -337,10 +379,18 @@ if($cmd -like "*;*")
     $number = 0
     $reverse = $false
     $numSC = 0
+    $dic = 0
 
     if($cmd -match '-sc(\d+)')
     {
         $numSC = [int]$Matches[1]
+
+        if($numSC -ne 1 -and $numSC -ne 2)
+        {
+            Write-Host "Please provide a number between one and two using -sc{1/2}"
+            break
+        }
+
     }
 
     if($cmd -like "*-rv*")
@@ -351,7 +401,6 @@ if($cmd -like "*;*")
     if($cmd -match "-p(\S+)")
     {
         $path = [string]$Matches[1]
-       
     }
 
     elseif($cmd -notmatch "-p(\S+)")
@@ -363,6 +412,11 @@ if($cmd -like "*;*")
     if($cmd -match '-n(\d+)')
     {
         $number = [int]$Matches[1]
+    }
+
+    if($cmd -match '-d(\d+)')
+    {
+         $dic = [int]$Matches[1]
     }
 
     $parts = $cmd -split ';'
@@ -381,10 +435,13 @@ if($cmd -like "*;*")
     }
 
 
-    mc:pw/U $keywords $number $numSC $path $reverse
+    mc:pw/U $keywords $number $numSC $path $reverse $dic
 
 }
 else
 {
     Write-Host "The input format is incorrect. Please ensure it follows the 'keyword,keyword; -sc{number} -n{number} -p{path} -rv' format."
 }
+
+
+
