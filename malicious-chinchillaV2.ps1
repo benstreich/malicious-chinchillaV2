@@ -54,14 +54,18 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
 
 
-
             if($combinationKeywords -eq $true)
             {
+                if($keywords.Count -lt 2)
+                {
+                    cls
+                    Write-host "if the flag -c is prompted make sure to use atleast two keywords" 
+                    break
+                }
+
+
 
                 #foundationstone Keywords
-                if($keywords.Count -gt 1)
-                {
-
                 function Get-KeywordCombinations {
                                 param (
                                     [string[]]$keywords,
@@ -86,33 +90,32 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 
                 $allCombinations = $allCombinations | Sort-Object | Get-Unique 
 
-                 $tempallComb = $allCombinations
+               
+                 $keywords = $allCombinations
 
-                 if($reversed -eq $true)
-                 {
+            } 
 
-                 foreach($allCombination in $tempallComb)
+
+
+              if($reversed -eq $true)
+              {
+
+                 foreach($keyword in $keywords)
                  {
                      $array = @()
-                     for($i = $allCombination.Length;$i -gt 0; $i--)
+                     for($i = $keyword.Length;$i -gt 0; $i--)
                      {
-                        $array += $allCombination[$i-1] 
+                        $array += $keyword[$i-1] 
                      }
                      
-                     $allCombinations += (($array -join('')))
+                     $keywords += (($array -join('')))
                      
                  }
-                 }
+              }
 
-                 $keywords = $allCombinations
-            }
 
-                else
-                {
-                    if($reversed -eq $true){
-                    $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''}
-                }
-            } 
+
+
 
 
            #CombinationsCalculations
@@ -365,7 +368,6 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 }
       }
     
-
         (mc:pw $array $range $specChar $reverse $combinationKeywords) | Out-File -FilePath $completePath
         
     } catch {
@@ -400,7 +402,6 @@ if($cmd -like "*;*")
         }
 
     }
-
 
     $e = $cmd -split ' '
 
@@ -450,6 +451,8 @@ if($cmd -like "*;*")
     {
         $keywords = [array]$keywordsPart
     }
+
+
 
 
     mc:pw/U $keywords $number $numSC $path $reverse $dic $combinationKeywords
