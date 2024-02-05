@@ -58,5 +58,7 @@ malicious-chinchillaV2
 
     (~!: melon; -d3...) Prompts you 3 additional synonyms that are thrown into the mix and are processesed depending on the other flags prompted.
 
+    All of the above can be combined of course
+
     (~!: party, lemon; -c...) when multiple keywords are prompted mc will generate every combination with the keywords and will process it depending on the other flags promnpted.
 
