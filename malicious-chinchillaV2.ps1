@@ -1,5 +1,5 @@
 ﻿function mc:pw/U{
-param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic)
+param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic, [bool]$combinationKeywords)
 
 
         if($dic -ne 0)
@@ -34,7 +34,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
             $name += "+" + $a
         }
 
-        $fileName = "!_Comb${name}&Range${range}&SpecChar${specChar}&Reversed${reverse}.txt"
+        $fileName = "!_maliciouschinchillav2${name}&Combination${combinationKeywords}&Range${range}&SpecChar${specChar}&Reversed${reverse}.txt"
         $completePath = "${path}\${fileName}"
 
         New-Item -Path $path -ItemType "file" -Name $fileName
@@ -49,12 +49,18 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 [int]$numbers
                 ,[int]$specialCharacters,
                 [bool]$reversed
+                ,[bool]$combinationKeywords
             )
 
 
-            #foundationstone Keywords
-            if($keywords.Count -gt 1)
+
+
+            if($combinationKeywords -eq $true)
             {
+
+                #foundationstone Keywords
+                if($keywords.Count -gt 1)
+                {
 
                 function Get-KeywordCombinations {
                                 param (
@@ -101,12 +107,12 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                  $keywords = $allCombinations
             }
 
-            else
-            {
-                if($reversed -eq $true){
-                $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''}
-            }
-           
+                else
+                {
+                    if($reversed -eq $true){
+                    $keywords += ([regex]::Matches($keywords[0],'.','RightToLeft') | ForEach {$_.value}) -join ''}
+                }
+            } 
 
 
            #CombinationsCalculations
@@ -169,7 +175,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
            }
 
            Write-host "Total possible Combinations:" $combinationsCalc
-           $estTime = ($combinationsCalc / 22) / 1000
+           $estTime = [Math]::Round((($combinationsCalc / 22) / 1000),2)
            if($estTime -gt 60)
            { 
                 $estTime = $estTime / 60
@@ -360,7 +366,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
       }
     
 
-        (mc:pw $array $range $specChar $reverse) | Out-File -FilePath $completePath
+        (mc:pw $array $range $specChar $reverse $combinationKeywords) | Out-File -FilePath $completePath
         
     } catch {
          Write-Host "An error occurred" -ForegroundColor "Red"
@@ -381,6 +387,7 @@ if($cmd -like "*;*")
     $reverse = $false
     $numSC = 0
     $dic = 0
+    $combinationKeywords = $false
 
     if($cmd -match '-sc(\d+)')
     {
@@ -388,13 +395,21 @@ if($cmd -like "*;*")
 
         if($numSC -ne 1 -and $numSC -ne 2)
         {
-            Write-Host "Please provide a number between one and two using -sc{1/2}"
+            Write-Host "Please provide a number between one and two using -sc[1/2]"
             break
         }
 
     }
 
-    if($cmd -like "*-rv*")
+
+    $e = $cmd -split ' '
+
+    if($e -contains '-c')
+    {
+        $combinationKeywords = $true
+    }
+
+    if($e -contains "-rv")
     {
         $reverse = $true          
     }
@@ -402,6 +417,7 @@ if($cmd -like "*;*")
     if($cmd -match "-p(\S+)")
     {
         $path = [string]$Matches[1]
+
     }
 
     elseif($cmd -notmatch "-p(\S+)")
@@ -436,12 +452,24 @@ if($cmd -like "*;*")
     }
 
 
-    mc:pw/U $keywords $number $numSC $path $reverse $dic
+    mc:pw/U $keywords $number $numSC $path $reverse $dic $combinationKeywords
+
+
+
+
 
 }
+
 else
 {
-    Write-Host "The input format is incorrect. Please ensure it follows the 'keyword,keyword; -sc{number} -n{number} -p{path} -rv' format."
+    Write-Host "The input format is incorrect. Please ensure it follows this format:
+    ~!: keyword,keyword;
+    [MANDATORY][-p [string]Path] [--path]
+    [-sc[int]1 || [int]2] [--specialcharacters[int]1 || [int]2]
+    [-rv] [--reverse]
+    [-n[int]] [--number[int]]
+    [INTERNET CONNECTION REQUIRED][-d[int]] [--dictionary[int]]
+    [-c] [--combination]"
 }
 
 
