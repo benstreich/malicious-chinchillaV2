@@ -1,8 +1,4 @@
-﻿
-
-
-
-function mc:pw/U{
+﻿function mc:pw/U{
 param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic)
 
 
@@ -178,6 +174,11 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
            { 
                 $estTime = $estTime / 60
                 Write-host "Estimated Time: ${estTime}m"
+           }
+           if($estTime -gt 3600)
+           {
+                $estTime = $estTime / 3600
+                Write-Host "Estimated Time: ${estTime}h"
            }
             else
            {
