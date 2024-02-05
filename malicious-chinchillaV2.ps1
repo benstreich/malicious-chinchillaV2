@@ -391,7 +391,7 @@ if($cmd -like "*;*")
     $dic = 0
     $combinationKeywords = $false
 
-    if($cmd -match '-sc(\d+)')
+    if($cmd -match '-sc(\d+)' -or $cmd -match '--specialcharacters(\d+)')
     {
         $numSC = [int]$Matches[1]
 
@@ -405,12 +405,12 @@ if($cmd -like "*;*")
 
     $e = $cmd -split ' '
 
-    if($e -contains '-c')
+    if($e -contains '-c' -or $cmd -like "*--combination*")
     {
         $combinationKeywords = $true
     }
 
-    if($e -contains "-rv")
+    if($e -contains "-rv" -or $cmd -like "*--reverse*")
     {
         $reverse = $true          
     }
