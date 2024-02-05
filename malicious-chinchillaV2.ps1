@@ -1,4 +1,5 @@
-﻿function mc:pw/U{
+﻿
+function mc:pw/U{
 param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic, [bool]$combinationKeywords)
 
 
@@ -19,15 +20,11 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
             foreach($a in $array)
             {
                  $request = Invoke-RestMethod -uri "https://api.datamuse.com/words?ml=$a"
-                 $temparray += $request[0..($dic-1)].word
+                 $temparray += $request[0..($dic-1)].word.replace(' ', '')
             }
             
             $array = $temparray
         }
-
-
-
-
 
         foreach($a in $array)
         {
@@ -38,6 +35,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
         $completePath = "${path}\${fileName}"
 
         New-Item -Path $path -ItemType "file" -Name $fileName
+        $stream = [System.IO.File]::Open($completePath, [System.IO.FileMode]::Create)
 
 
     try {
@@ -97,8 +95,8 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
 
 
-              if($reversed -eq $true)
-              {
+            if($reversed -eq $true)
+            {
 
                  foreach($keyword in $keywords)
                  {
@@ -112,11 +110,6 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                      
                  }
               }
-
-
-
-
-
 
            #CombinationsCalculations
            foreach($keyword in $keywords)
@@ -178,18 +171,18 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
            }
 
            Write-host "Total possible Combinations:" $combinationsCalc
-           $estTime = [Math]::Round((($combinationsCalc / 22) / 1000),2)
-           if($estTime -gt 60)
-           { 
-                $estTime = $estTime / 60
-                Write-host "Estimated Time: ${estTime}m"
-           }
-           if($estTime -gt 3600)
+           $estTime = [Math]::Round($combinationsCalc / 190224)
+           if($estTime -gt 60 -and $estTime -lt 3600)
            {
-                $estTime = $estTime / 3600
-                Write-Host "Estimated Time: ${estTime}h"
+                $estTimeMIN = $estTime / 60
+                Write-host "Estimated Time: ${estTimeMIN}m"
            }
-            else
+           elseif($estTime -gt 3600)
+           {
+                $estTimeHOUR = $estTime / 3600
+                Write-Host "Estimated Time: ${estTimeHOUR}h"
+           } 
+           else
            {
                 Write-host "Estimated Time: ${estTime}s"
            }
@@ -198,7 +191,8 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
                 #every lower/upper case combination 
                 #foreach combination of keywords
-                foreach($keyword in $keywords)
+                
+                $res = foreach($keyword in $keywords)
                 {
                  
                     function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
@@ -219,12 +213,19 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
                 }
 
+                $data = [System.Text.Encoding]::UTF8.GetBytes($res)
+
+                $result = $stream.BeginWrite($data, 0, $data.Length, $null, $null)
+                $stream.EndWrite($result)
+                
+                
+
                 #every lower/upper case combination 
                 #foreach combination of keywords
                 #with foreach the provided numbers in each index of the string
                 if($numbers -ne 0)
                 {
-                    foreach($keyword in $keywords)
+                    $res = foreach($keyword in $keywords)
                     {
                      
                     function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
@@ -252,6 +253,10 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                     GenerateCombinations $keyword
 
                 }
+                $data = [System.Text.Encoding]::UTF8.GetBytes($res)
+
+                $result = $stream.BeginWrite($data, 0, $data.Length, $null, $null)
+                $stream.EndWrite($result)
                 }    
                          
                 #every lower/upper case combination 
@@ -259,7 +264,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 #with foreach specialcharacter in each index of the string
                 if($specialCharacters -ne 0)
                 {
-                    foreach($keyword in $keywords)
+                    $res = foreach($keyword in $keywords)
                     {
                         function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
                         if ($currentIndex -eq $inputString.Length) {
@@ -303,6 +308,11 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
                         GenerateCombinations $keyword
                     }
+
+                    $data = [System.Text.Encoding]::UTF8.GetBytes($res)
+
+                    $result = $stream.BeginWrite($data, 0, $data.Length, $null, $null)
+                    $stream.EndWrite($result)
                 }
                 
 
@@ -312,7 +322,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 if($specialCharacters -ne 0 -and $numbers -ne 0)
                 {
                     
-                    foreach($keyword in $keywords)
+                    $res = foreach($keyword in $keywords)
                     {
                         function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
                         if ($currentIndex -eq $inputString.Length) {
@@ -365,10 +375,29 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                         GenerateCombinations $keyword
                     }
 
+                    $data = [System.Text.Encoding]::UTF8.GetBytes($res)
+
+                    $result = $stream.BeginWrite($data, 0, $data.Length, $null, $null)
+                    $stream.EndWrite($result)
+
                 }
+
+                $stream.Close()
       }
     
-        (mc:pw $array $range $specChar $reverse $combinationKeywords) | Out-File -FilePath $completePath
+        Measure-Command{
+        mc:pw $array $range $specChar $reverse $combinationKeywords
+
+        
+        [string]$cmd = Read-Host '~! Structure'
+        
+        if($cmd -eq  'y' -or 'Y')
+        {
+            (Get-Content $completePath) -replace ' ', "`n" | Set-Content $completePath
+            
+        } 
+
+        }
         
     } catch {
          Write-Host "An error occurred" -ForegroundColor "Red"
@@ -377,9 +406,6 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
     } 
 
 }
-
-
-
 
 [string]$cmd = Read-Host '~!' 
 
@@ -415,24 +441,23 @@ if($cmd -like "*;*")
         $reverse = $true          
     }
 
-    if($cmd -match "-p(\S+)")
-    {
+    if ($cmd -match "-p([^\s]+)") {
         $path = [string]$Matches[1]
-
     }
 
-    elseif($cmd -notmatch "-p(\S+)")
-    {
+    else {
         "Please provide a path using -p{path}"
         break
     }
 
-    if($cmd -match '-n(\d+)')
+
+
+    if($cmd -match '-n(\d+)' -or $cmd -match '--number(\d+)')
     {
         $number = [int]$Matches[1]
     }
 
-    if($cmd -match '-d(\d+)')
+    if($cmd -match '-d(\d+)' -or $cmd -match '--dictionary(\d+)')
     {
          $dic = [int]$Matches[1]
     }
@@ -467,7 +492,7 @@ else
 {
     Write-Host "The input format is incorrect. Please ensure it follows this format:
     ~!: keyword,keyword;
-    [MANDATORY][-p [string]Path] [--path]
+    [MANDATORY][-p [string]Path]
     [-sc[int]1 || [int]2] [--specialcharacters[int]1 || [int]2]
     [-rv] [--reverse]
     [-n[int]] [--number[int]]
