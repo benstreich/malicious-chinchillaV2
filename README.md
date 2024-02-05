@@ -2,7 +2,7 @@
 ------------------------
 
 malicious-chinchillaV2 is the second version of the malicious series. This powershell script provides the user with the biggest combination of passwords a user can have.
-Combined with hashcat this is the ultimate password cracker. As parameters the user gives one or multiple keywords. Additionally you can choose to have numbers and specialcharacters.
+Combined with hashcat this is the ultimate password cracker. As parameters the user gives one or multiple keywords with additional flags.
 malicious-chinchilla covers basically every combination you can do with the keywords.
 
 malicious-chinchillaV2
@@ -14,18 +14,20 @@ malicious-chinchillaV2
     Syntax
     --------------------
     ~!: keyword,keyword;
+        [MANDATORY][-p [string]Path] [--path]
         [-sc[int]1 || [int]2] [--specialcharacters[int]1 || [int]2]
         [-rv] [--reverse]
-        [-p [string]Path] [--path]
         [-n[int]] [--number[int]]
-        [-d[int]] [--dictionary[int]]
+        [INTERNET CONNECTION REQUIRED][-d[int]] [--dictionary[int]]
         [-c] [--combination]
 
     Logic
     --------------------
     malicious-chinchillaV2 will process the command as follows:
 
-    (~!: zoo; -sc1) Every upper/lowercase possibility plus every specialcharacter ('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~') at every index with every         
+    (~! meat; -pC:\ExamplePath...) Saves Results in a file at the prompted Path 
+    
+    (~!: zoo; -sc1...) Every upper/lowercase possibility plus every specialcharacter ('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~') at every index with every         
     upper/lowercase Possibility.
     Possible Combinations with 1 Specialcharacters can be calculated like this:
     (2^keywordlength * keywordlength + 1) * 19
@@ -35,7 +37,7 @@ malicious-chinchillaV2
     Plus the Standard 2^3 upper/lowercase Combinations making it 616 Combinations.
     Possible Combinations: zO/o
 
-    (~!: chuck; -sc2) Every upper/lowercase possibility plus every specialcharacter ('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~') twice in the word at every possible Index covering all         
+    (~!: chuck; -sc2...) Every upper/lowercase possibility plus every specialcharacter ('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~') twice in the word at every possible Index covering all         
     Combinations possible with the keyword and two specialcharacters.
     Possible Combinations with 2 Specialcharacters can be calculated like this:
     ((((keywordlength + 2) * 19) * (keywordlength+1)) * 19) * 2^keywordlength
@@ -44,4 +46,17 @@ malicious-chinchillaV2
     ((((5+2) * 19) * (5+1)) * (19)) * ([Math]::Pow(2, 5)) = 485184 Combinations
     Plus the Standard 2^5 upper/lowercase Combinations making it 485216 Combinations.
     Possible Combinations: !cH&Uck
-   
+
+    (~!: mouse; -rv...) Every upper/lowercase possibility plus every upper/lowercase possbility in reverse
+    Possible Combination: eSuom
+
+    (~!: t-rex; -n10...) Every upper/lowercase possibility plus every number at every index
+    Possible Combination: t-3rex
+    ((2^keywordlength) * (keywordlength + 1)) * (10 + 1) = 2112 Combinations
+    Plus the Standard 2^5 upper/lowercase Combinations making it 2144 Combinations.
+    Possible Combinations: t-RE10x
+
+    (~!: melon; -d3...) Prompts you 3 additional synonyms that are thrown into the mix and are processesed depending on the other flags prompted.
+
+    (~!: party, lemon; -c...) when multiple keywords are prompted mc will generate every combination with the keywords and will process it depending on the other flags promnpted.
+
