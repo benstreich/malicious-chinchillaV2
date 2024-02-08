@@ -2,13 +2,16 @@
 ------------------------
 
 malicious-chinchillaV2 is the second version of the malicious series. This powershell script provides the user with the biggest combination of passwords a user can have.
-Combined with hashcat this is the ultimate password cracker. As parameters the user gives one or multiple keywords with additional flags.
+Combined with vicious-chinchilla this is the ultimate password cracker. As parameters the user gives one or multiple keywords with additional flags.
 malicious-chinchilla covers basically every combination you can do with the keywords.
 
-malicious-chinchillaV2
-    --------------------
-    Version: 2.89
-    Other works: Devious-ChinchillaV1-3
+#Installation:
+------------------------
+
+-Open any time of cmd
+-navigate to your dir of desire
+-type in git clone https://github.com/benstreich/malicious-chinchillaV2.git
+
 
 
     Syntax
