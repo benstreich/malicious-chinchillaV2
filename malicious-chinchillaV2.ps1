@@ -156,6 +156,8 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
            }
 
+           Write-host "`n"
+
            Write-host "Total possible Combinations: " -NoNewline
            Write-host $combinationsCalc -ForegroundColor Green
 
@@ -167,12 +169,18 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 Write-host "Estimated Time: " -NoNewline 
                 Write-host "${estTimeMIN}m" -ForegroundColor Blue
            }
-           elseif($estTime -gt 3600)
+           if($estTime -gt 3600 -and $estTime -lt 86400)
            {
                 $estTimeHOUR = $estTime / 3600
                 Write-Host "Estimated Time: " -NoNewline
                 Write-host "${estTimeHOUR}h" -ForegroundColor Blue
-           } 
+           }
+           if($estTiem -gt 86400)
+           {
+                $estTimeHOUR = $estTime / 86400
+                Write-Host "Estimated Time: " -NoNewline
+                Write-host "${estTimeHOUR}h" -ForegroundColor Blue
+           }
            else
            {
                 Write-host "Estimated Time: " -NoNewline
