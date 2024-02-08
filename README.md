@@ -6,10 +6,6 @@ malicious-chinchilla covers basically every combination you can do with the keyw
 
 
 
-
-
-
-
 ## Run Locally
 
 Clone the project
