@@ -1,5 +1,4 @@
-﻿
-function mc:pw/U{
+﻿function mc:pw/U{
 param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic, [bool]$combinationKeywords)
 
 
@@ -34,9 +33,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
         $fileName = "!_maliciouschinchillav2${name}&Combination${combinationKeywords}&Range${range}&SpecChar${specChar}&Reversed${reverse}.txt"
         $completePath = "${path}\${fileName}"
 
-        New-Item -Path $path -ItemType "file" -Name $fileName
         $stream = [System.IO.File]::Open($completePath, [System.IO.FileMode]::Create)
-
 
     try {
 
@@ -93,8 +90,6 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
             } 
 
-
-
             if($reversed -eq $true)
             {
 
@@ -120,15 +115,11 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 $ulCase = [Math]::Pow(2, $len)
                 $combinationsCalc += $ulCase
 
-                Write-host "Only Upper/Lowercase: keyword($keyword), Possibilities($ulCase)"
-                
-
                 #upper/lower + numbers at every index
                 if($numbers -ne 0)
                 {
                     $ulCaseN = (([Math]::Pow(2, $len)) * ($len + 1)) * ($numbers + 1)
                     $combinationsCalc += $ulCaseN
-                    Write-host "Upper/Lowercase + numbers at every index: keyword($keyword), Possibilities($ulCaseN)"
                 }
 
                 #upper/lower + special characters at every index
@@ -138,13 +129,11 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                     {
                         $ulCaseSC = ([Math]::Pow(2, $len) * ($len + 1)) * 19
                         $combinationsCalc += $ulCaseSC
-                        Write-host "Upper/Lowercase + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseSC)"
                     }
                     if($specialCharacters -eq 2)
                     {
                         $ulCaseMSC = (((($len+2) * 19) * ($len+1)) * (19)) * ([Math]::Pow(2, $len))
                         $combinationsCalc += $ulCaseMSC
-                        Write-host "Upper/Lowercase + 2 specialcharacters at every index: keyword($keyword), POssibilites($ulCaseMSC)"
                     }
                     
                 }
@@ -156,35 +145,37 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                     {
                         $ulCaseNSC = (((($len+2) * 19) * ($len+1)) * ($numbers+1)) * ([Math]::Pow(2, $len))
                         $combinationsCalc += $ulCaseNSC
-                        Write-host "Upper/Lowercase + numbers at every index + specialcharacters at every index: keyword($keyword), Possibilities($ulCaseNSC)"
                     }
                     elseif($specialCharacters -eq 2)
                     {
                         $ulCaseNMSC = (((((($len+3) * 19) * ($len + 2)) * 19) * ($len+1)) * ($numbers + 1)) * ([Math]::Pow(2, $len))
                         $combinationsCalc += $ulCaseNMSC
-                        Write-Host "Upper/Lowercase + numbers at every index + specialcharacters (multiple) at every index: keyword($keyword), Possibilities($ulCaseNMSC)"
                     }
                 }
 
-                Write-host "`n"
 
            }
 
-           Write-host "Total possible Combinations:" $combinationsCalc
+           Write-host "Total possible Combinations: " -NoNewline
+           Write-host $combinationsCalc -ForegroundColor Green
+
            $estTime = [Math]::Round($combinationsCalc / 190224)
            if($estTime -gt 60 -and $estTime -lt 3600)
            {
                 $estTimeMIN = $estTime / 60
-                Write-host "Estimated Time: ${estTimeMIN}m"
+                Write-host "Estimated Time: " -NoNewline 
+                Write-host "${estTimeMIN}m" -ForegroundColor Blue
            }
            elseif($estTime -gt 3600)
            {
                 $estTimeHOUR = $estTime / 3600
-                Write-Host "Estimated Time: ${estTimeHOUR}h"
+                Write-Host "Estimated Time: " -NoNewline
+                Write-host "${estTimeHOUR}h" -ForegroundColor Blue
            } 
            else
            {
-                Write-host "Estimated Time: ${estTime}s"
+                Write-host "Estimated Time: " -NoNewline
+                Write-host "${estTime}s" -ForegroundColor Blue
            }
 
 
@@ -387,25 +378,61 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
     
         Measure-Command{
         mc:pw $array $range $specChar $reverse $combinationKeywords
-
-        
-        [string]$cmd = Read-Host '~! Structure'
-        
-        if($cmd -eq  'y' -or 'Y')
-        {
-            (Get-Content $completePath) -replace ' ', "`n" | Set-Content $completePath
-            
-        } 
-
         }
+
+        Write-host "`n"
+        Write-Host "Process finished" -ForegroundColor Green
+        Start-Sleep -Seconds 15
         
     } catch {
-         Write-Host "An error occurred" -ForegroundColor "Red"
-
-         Write-Error $_
+        Write-Host "ERROR" -ForegroundColor Red
     } 
 
 }
+
+$name = 'malicious-chinchilla.'
+$char = $name.ToCharArray()
+
+foreach($c in $char)
+{
+    Write-host $c -NoNewline -ForegroundColor Red
+    Start-Sleep -Milliseconds 40
+}
+Write-host ""
+Start-Sleep -Seconds 1
+
+for($i = 0; $i -lt 10; $i++)
+{
+    switch($i)
+    {
+       
+        1
+        {
+            Write-host $name -ForegroundColor Yellow
+            Start-Sleep -Milliseconds 100
+        }
+
+        2
+        {
+            Write-host $name -ForegroundColor Green
+            Start-Sleep -Milliseconds 100
+        }
+        3
+        {
+            Write-host $name -ForegroundColor Blue
+            Start-Sleep -Milliseconds 100
+        }
+        4
+        {
+            Write-host $name -ForegroundColor DarkBlue
+            Start-Sleep -Milliseconds 100
+        }
+    }
+}
+
+Write-host "`n"
+
+
 
 [string]$cmd = Read-Host '~!' 
 
