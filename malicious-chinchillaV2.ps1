@@ -160,6 +160,7 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
            Write-host $combinationsCalc -ForegroundColor Green
 
            $estTime = [Math]::Round($combinationsCalc / 190224)
+
            if($estTime -gt 60 -and $estTime -lt 3600)
            {
                 $estTimeMIN = $estTime / 60
@@ -386,6 +387,8 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
         
     } catch {
         Write-Host "ERROR" -ForegroundColor Red
+        Start-Sleep -Seconds 15
+
     } 
 
 }
@@ -401,7 +404,7 @@ foreach($c in $char)
 Write-host ""
 Start-Sleep -Seconds 1
 
-for($i = 0; $i -lt 10; $i++)
+for($i = 0; $i -lt 5; $i++)
 {
     switch($i)
     {
@@ -525,6 +528,9 @@ else
     [-n[int]] [--number[int]]
     [INTERNET CONNECTION REQUIRED][-d[int]] [--dictionary[int]]
     [-c] [--combination]"
+
+    Start-Sleep -Seconds 15
+
 }
 
 
