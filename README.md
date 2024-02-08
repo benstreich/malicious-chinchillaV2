@@ -5,6 +5,12 @@ malicious-chinchillaV2 is the second version of the malicious series. This power
 Combined with vicious-chinchilla this is the ultimate password cracker. As parameters the user gives one or multiple keywords with additional flags.
 malicious-chinchilla covers basically every combination you can do with the keywords.
 
+![image](https://github.com/benstreich/malicious-chinchillaV2/assets/90034208/b4f51cbd-690a-40a3-b78d-15a41087579b)
+
+
+
+
+
 Installation:
 ------------------------
 
