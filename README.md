@@ -33,7 +33,24 @@ The syntax might seem confusing at first, but i promise you its not as complicat
         [-n[int]] [--number[int]]
         [INTERNET CONNECTION REQUIRED][-d[int]] [--dictionary[int]]
         [-c] [--combination]
+
 ```
+
+
+| Flag             | Function                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| -p | Outputs the Textfile with the saved combination at the given path|
+| -sc | Either 1 or 2 Specialcharacters are being mixed in with the combiantions |
+| -rv | Every given keyword is also being reversed and combined |
+| -n | 0 till given Number is being mixed into the combination |
+| -d | For every given Keyword mc will prompt you additional synonyms and will combine it (Internet connection is required here|
+| -c | For every given Keyword mc will combine the keywords with every possibility of the given keywords (has to be multiple keywords) |
+
+
+
+
+
+
 
 ### Examples
 ```
@@ -56,4 +73,11 @@ The syntax might seem confusing at first, but i promise you its not as complicat
 
 ![image](https://github.com/benstreich/malicious-chinchillaV2/assets/90034208/b4f51cbd-690a-40a3-b78d-15a41087579b)
 
+
+## License
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+## Related
+
+[vicious-chinchilla](https://github.com/benstreich/vicious-chinchilla)
 
