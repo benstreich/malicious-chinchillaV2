@@ -169,17 +169,17 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 Write-host "Estimated Time: " -NoNewline 
                 Write-host "${estTimeMIN}m" -ForegroundColor Blue
            }
-           if($estTime -gt 3600 -and $estTime -lt 86400)
+           elseif($estTime -gt 3600 -and $estTime -lt 86400)
            {
                 $estTimeHOUR = $estTime / 3600
                 Write-Host "Estimated Time: " -NoNewline
                 Write-host "${estTimeHOUR}h" -ForegroundColor Blue
            }
-           if($estTiem -gt 86400)
+           elseif($estTiem -gt 86400)
            {
-                $estTimeHOUR = $estTime / 86400
+                $estTimeDAY = $estTime / 86400
                 Write-Host "Estimated Time: " -NoNewline
-                Write-host "${estTimeHOUR}h" -ForegroundColor Blue
+                Write-host "${estTimeDAY}d" -ForegroundColor Blue
            }
            else
            {
