@@ -11,7 +11,7 @@ malicious-chinchilla covers basically every combination you can do with the keyw
 Clone the project
 
 ```bash
-  git clone https://link-to-project](https://github.com/benstreich/malicious-chinchillaV2.git
+  git clone https://github.com/benstreich/malicious-chinchillaV2.git
 ```
 
 Go to the project directory
