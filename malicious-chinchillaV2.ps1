@@ -1,6 +1,7 @@
 ﻿function mc:pw/U{
 param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]$dic, [bool]$combinationKeywords)
 
+    try{
 
         if($dic -ne 0)
         {
@@ -30,14 +31,21 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
             $name += "+" + $a
         }
 
-        $fileName = "!_maliciouschinchillav2${name}&Combination${combinationKeywords}&Range${range}&SpecChar${specChar}&Reversed${reverse}.txt"
-        $completePath = "${path}\${fileName}"
 
-        $stream = [System.IO.File]::Open($completePath, [System.IO.FileMode]::Create)
 
-    try {
+        if(Test-Path -Path $path -PathType Leaf)
+        {
+            $stream = [System.IO.File]::Open($path, [System.IO.FileMode]::Open) 
+        }
 
-        
+        else{
+
+            $fileName = "!_maliciouschinchillav2${name}&Combination${combinationKeywords}&Range${range}&SpecChar${specChar}&Reversed${reverse}.txt"
+            $completePath = "${path}\${fileName}"
+
+            $stream = [System.IO.File]::Open($completePath, [System.IO.FileMode]::Create) 
+        }
+
        function mc:pw{
             param(
                 [System.Collections.ArrayList]$keywords,   
@@ -127,12 +135,12 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 {
                     if($specialCharacters -eq 1)
                     {
-                        $ulCaseSC = ([Math]::Pow(2, $len) * ($len + 1)) * 19
+                        $ulCaseSC = ([Math]::Pow(2, $len) * ($len + 1)) * 31
                         $combinationsCalc += $ulCaseSC
                     }
                     if($specialCharacters -eq 2)
                     {
-                        $ulCaseMSC = (((($len+2) * 19) * ($len+1)) * (19)) * ([Math]::Pow(2, $len))
+                        $ulCaseMSC = (((($len+2) * 31) * ($len+1)) * (31)) * ([Math]::Pow(2, $len))
                         $combinationsCalc += $ulCaseMSC
                     }
                     
@@ -143,12 +151,12 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                 {
                     if($specialCharacters -eq 1)
                     {
-                        $ulCaseNSC = (((($len+2) * 19) * ($len+1)) * ($numbers+1)) * ([Math]::Pow(2, $len))
+                        $ulCaseNSC = (((($len+2) * 31) * ($len+1)) * ($numbers+1)) * ([Math]::Pow(2, $len))
                         $combinationsCalc += $ulCaseNSC
                     }
                     elseif($specialCharacters -eq 2)
                     {
-                        $ulCaseNMSC = (((((($len+3) * 19) * ($len + 2)) * 19) * ($len+1)) * ($numbers + 1)) * ([Math]::Pow(2, $len))
+                        $ulCaseNMSC = (((((($len+3) * 31) * ($len + 2)) * 31) * ($len+1)) * ($numbers + 1)) * ([Math]::Pow(2, $len))
                         $combinationsCalc += $ulCaseNMSC
                     }
                 }
@@ -183,8 +191,16 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
            }
            else
            {
-                Write-host "Estimated Time: " -NoNewline
-                Write-host "${estTime}s" -ForegroundColor Blue
+                if($estTime -lt 1)
+                {
+                      Write-host "Estimated Time: " -NoNewline
+                      Write-host "1s>" -ForegroundColor Blue
+                }
+                else
+                {
+                    Write-host "Estimated Time: " -NoNewline
+                    Write-host "${estTime}s" -ForegroundColor Blue
+                }
            }
 
 
@@ -270,7 +286,9 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                         if ($currentIndex -eq $inputString.Length) {
                             
                     
-                            $specialcharacteres = @('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~')
+                            $specialcharacteres = @('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~', '@', '_', '=', '|', ':', ';', '"', "<", ">", ",", ".", '`')
+                           
+                            
                     
                             foreach($sp in $specialcharacteres)
                             {
@@ -326,7 +344,8 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
                     {
                         function GenerateCombinations($inputString, $currentIndex = 0, $currentCombination = "") {
                         if ($currentIndex -eq $inputString.Length) {
-                        $specialcharacteres = @('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~')
+                        $specialcharacteres = @('!', '?', '$', '^', '+', '-', '#', '{', '}', '[', ']', '/', '\', '*', '(', ')', '%', '&', '~', '@', '_', '=', '|', ':', ';', '"', "<", ">", ",", ".", '`')
+
 
                         for($i = 0; $i -le $numbers; $i++)
                         {
@@ -391,12 +410,21 @@ param ($array, [int]$range, [int]$specChar, [string]$path, [bool]$reverse, [int]
 
         Write-host "`n"
         Write-Host "Process finished" -ForegroundColor Green
-        Start-Sleep -Seconds 15
         
-    } catch {
-        Write-Host "ERROR" -ForegroundColor Red
-        Start-Sleep -Seconds 15
+    }
+    
+    catch [System.IO.DirectoryNotFoundException]
+    {
+        Write-Host "Directory was not found" -ForegroundColor Red
+    }
 
+    catch [System.IO.FileNotFoundException]
+    {
+        Write-Host "File was not found" -ForegroundColor Red
+    }
+
+    catch {
+        Write-Host "an unexpected error occurred" -ForegroundColor Red
     } 
 
 }
@@ -411,6 +439,7 @@ foreach($c in $char)
 }
 Write-host ""
 Start-Sleep -Seconds 1
+
 
 for($i = 0; $i -lt 5; $i++)
 {
@@ -441,9 +470,10 @@ for($i = 0; $i -lt 5; $i++)
     }
 }
 
+
+do{
+
 Write-host "`n"
-
-
 
 [string]$cmd = Read-Host '~!' 
 
@@ -481,6 +511,7 @@ if($cmd -like "*;*")
 
     if ($cmd -match "-p([^\s]+)") {
         $path = [string]$Matches[1]
+
     }
 
     else {
@@ -515,31 +546,26 @@ if($cmd -like "*;*")
         $keywords = [array]$keywordsPart
     }
 
-
-
-
     mc:pw/U $keywords $number $numSC $path $reverse $dic $combinationKeywords
-
-
-
-
 
 }
 
 else
 {
-    Write-Host "The input format is incorrect. Please ensure it follows this format:
-    ~!: keyword,keyword;
-    [MANDATORY][-p [string]Path]
-    [-sc[int]1 || [int]2] [--specialcharacters[int]1 || [int]2]
-    [-rv] [--reverse]
-    [-n[int]] [--number[int]]
-    [INTERNET CONNECTION REQUIRED][-d[int]] [--dictionary[int]]
-    [-c] [--combination]"
+    Write-host "`n"
+    Write-Host "The input format is incorrect. Please ensure it follows this format:"
+    Write-host "`n"
+    Write-host "~!: keyword,keyword...;" 
+    Write-host "[MANDATORY][-p [string]Path]" -ForegroundColor Blue
+    Write-host "[-sc[int]1 || [int]2] [--specialcharacters[int]1 || [int]2]" -ForegroundColor Cyan
+    Write-host "[-rv] [--reverse]" -ForegroundColor Green
+    Write-host "[-n[int]] [--number[int]]" -ForegroundColor Magenta
+    Write-host "[INTERNET CONNECTION REQUIRED][-d[int]] [--dictionary[int]]" -ForegroundColor Red
+    Write-host "[-c] [--combination]" -ForegroundColor Yellow
 
-    Start-Sleep -Seconds 15
+    Write-host "`n"
+    Write-Host "More at https://github.com/benstreich/malicious-chinchillaV2" -ForegroundColor White
 
 }
 
-
-
+}while($true)
