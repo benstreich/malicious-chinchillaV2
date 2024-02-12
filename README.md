@@ -39,7 +39,7 @@ The syntax might seem confusing at first, but i promise you its not as complicat
 
 | Flag             | Function                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| -p | Outputs the Textfile with the saved combination at the given path|
+| -p | Outputs a Textfile with the saved combination at the given path, or a txt path can also be prompted |
 | -sc | Either 1 or 2 Specialcharacters are being mixed in with the combiantions |
 | -rv | Every given keyword is also being reversed and combined |
 | -n | 0 till given Number is being mixed into the combination |
